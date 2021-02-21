@@ -14,7 +14,7 @@ public class Program {
         float middle = GetMiddleTemperature(patients); // получаем среднюю температуру
         float min = getBorderTemp(healthPatients, "min"); //определяем нижнюю температуру
         float max = getBorderTemp(healthPatients, "max"); //определяем верхнюю температуру
-        int countHealth = healthPatients.size();//получаем количесвто здоровых пацментов
+        int countHealth = healthPatients.size();//получаем количество здоровых пациентов
 
         System.out.println( "Средняя температура " + middle);
         System.out.println( "Количество здоровых пациентов " + countHealth);
