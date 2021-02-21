@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 public class Program {
 
     public static final int COUNT_OF_PATIENTS = 500; //количество пациентов
-    public static final float LOWEST_TEMP_HEALTH = 32.2f, HIGHEST_TEMP_HEALTH = 36.9f; //границы диапазона температур здоровых пациентов
+    public static final float LOWEST_TEMP_HEALTH = 36.2f, HIGHEST_TEMP_HEALTH = 36.9f; //границы диапазона температур здоровых пациентов
     public static final int LOWEST_TEMP = 32, HIGHEST_TEMP = 40; //граница температур всех пациентов
     public static void main(String[] args) {
 
@@ -16,6 +16,7 @@ public class Program {
         float max = getBorderTemp(healthPatients, "max"); //определяем верхнюю температуру
         int countHealth = healthPatients.size();//получаем количество здоровых пациентов
 
+        ConsoleOutHealthPatients(healthPatients);
         System.out.println( "Средняя температура " + middle);
         System.out.println( "Количество здоровых пациентов " + countHealth);
         System.out.println( "Нижняя температура здоровых " + min);
@@ -78,5 +79,13 @@ public class Program {
         return arrTemp;
     }
 
+    private static void ConsoleOutHealthPatients(HashMap<Integer, Float> patients) {
 
+        for (Map.Entry<Integer, Float> pair : patients.entrySet()){
+            System.out.println( "Пациент № " + (pair.getKey()+1) + " здоров :  " + pair.getValue());
+        }
+
+
+
+    }
 }
