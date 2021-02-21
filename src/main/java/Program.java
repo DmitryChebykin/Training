@@ -1,92 +1,69 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 
 public class Program {
 
-    public static final int COUNT_OF_PATIENTS = 30;
-
-    public static final float LOWEST_TEMP_HEALTH = 32.2f, HIGHEST_TEMP_HEALTH = 38.9f;
-    public static final int LOWEST_TEMP = 32, HIGHEST_TEMP = 40;
-
-    public static float res;
-
+    public static final int COUNT_OF_PATIENTS = 500; //количество пациентов
+    public static final float LOWEST_TEMP_HEALTH = 32.2f, HIGHEST_TEMP_HEALTH = 36.9f; //границы диапазона температур здоровых пациентов
+    public static final int LOWEST_TEMP = 32, HIGHEST_TEMP = 40; //граница температур всех пациентов
     public static void main(String[] args) {
 
         float[] patients = CreateArrayPatients(COUNT_OF_PATIENTS, LOWEST_TEMP, HIGHEST_TEMP);
-        List<Integer> healthPatients = getHealthPatients(patients, LOWEST_TEMP_HEALTH, HIGHEST_TEMP_HEALTH);
-        float middle = GetMiddleTemperature(patients, LOWEST_TEMP, HIGHEST_TEMP);
-        float min = getMinHealth(healthPatients);
-        float max = getMaxHealth(healthPatients);
+        HashMap<Integer, Float> healthPatients = getHealthPatients(patients, LOWEST_TEMP_HEALTH, HIGHEST_TEMP_HEALTH); //создаем хэшмапу здоровых пациентов
+        float middle = GetMiddleTemperature(patients); // получаем среднюю температуру
+        float min = getBorderTemp(healthPatients, "min"); //определяем нижнюю температуру
+        float max = getBorderTemp(healthPatients, "max"); //определяем верхнюю температуру
+        int countHealth = healthPatients.size();//получаем количесвто здоровых пацментов
 
-
-//        float[] arrTemp;
-//        float tempSummary = 0.0F;
-//        float tempLowHealth = 0.0F;
-//        float tempHighHealth = 0.0F;
-//        arrTemp = new float[COUNT_OF_PATIENTS];
-//        float tempMiddle = 0.0F; //средняя температура
-//        int health = 0; //количество здоровых пациентов
-//        // как быстро сгенерировать 500 флоат значений в диапазоне от 32 до 40 для массива элементов
-//        List<Integer> health_dude = new ArrayList<>();
-//
-//
-//        for (int i = 0; i <= arrTemp.length - 1; i++) {
-//            arrTemp[i] = LOWEST_TEMP + (int) ((float) Math.random() * 8) + (int) ((float) Math.random() * 10) / 10f;
-//            System.out.println("Пациент номер - " + " " + i +  " " +" " + arrTemp[i]);
-//            if (arrTemp[i] >= LOWEST_TEMP_HEALTH && arrTemp[i] <= HIGHEST_TEMP_HEALTH) {
-//                health_dude.add(i);
-//                health = health + 1;
-//                switch (health) {
-//                    case 1:
-//                        tempLowHealth = arrTemp[i];
-//                        tempHighHealth = arrTemp[i];
-//                        break;
-//                    default:
-//                        if (arrTemp[i] <= tempLowHealth) {
-//                            tempLowHealth = arrTemp[i];
-//                        }
-//                        if (arrTemp[i] >= tempHighHealth) {
-//                            tempHighHealth = arrTemp[i];
-//                        }
-//                }
-//            }
-//            tempSummary = tempSummary + arrTemp[i];
-//        }
-//        tempMiddle = (tempSummary / (arrTemp.length - 1));
-//
-//        System.out.println(health_dude.toString());
-//        System.out.println("Средняя температура по больнице равна " + tempMiddle);
-//        System.out.println("Количество здоровых равно  " + health);
-//        System.out.println("Самая низкая здоровая температура " + tempLowHealth);
-//        System.out.println("Самая высокая здоровая температура " + tempHighHealth);
-//        String printOutX = "";
+        System.out.println( "Средняя температура " + middle);
+        System.out.println( "Количество здоровых пациентов " + countHealth);
+        System.out.println( "Нижняя температура здоровых " + min);
+        System.out.println( "Верхняя температура здоровых " + max);
 
     }
 
-    private static float getMaxHealth(List<Integer> healthPatients) {
-        return 0;
+
+    private static float getBorderTemp(HashMap<Integer, Float> healthPatients, String TypeBorder) {
+        float temp;
+        temp = healthPatients.get(healthPatients.keySet().toArray()[0]);
+
+        for (Map.Entry<Integer, Float> pair : healthPatients.entrySet())
+        {
+            switch (TypeBorder){
+                case "min":
+                    if (pair.getValue() <= temp) {temp = pair.getValue();}
+                break;
+                case "max":
+                    if (pair.getValue() >= temp) {temp = pair.getValue();}
+                break;
+            }
+        }
+
+        return temp;
     }
 
-    private static float getMinHealth(List<Integer> healthPatients) {
-        return 0;
+    private static HashMap getHealthPatients(float[] patients, float lowestTempHealth, float highestTempHealth) {
+
+        HashMap<Integer, Float> healthPatients = new HashMap<>();
+
+    for (int i=0; i < patients.length; i++) {
+
+        if (patients[i] >= lowestTempHealth && patients[i] <= highestTempHealth){
+            healthPatients.put(i,patients[i]);
+        }
+
     }
 
-    private static List<Integer> getHealthPatients(float[] patients, float lowestTempHealth, float highestTempHealth) {
-
-
-        Stream.of(patients).forEach(el -> Stream.of(el).filter(temp -> temp > lowestTempHealth && temp < highestTempHealth)).count();
-
-
-        //Theme actualTheme =  Stream.of(Theme.values()).filter(value -> !value.getTheme().equals(NewTheme)).findFirst().get();
-
-        return null;
+        return 	healthPatients;
     }
 
-    private static float GetMiddleTemperature(float[] patients, int lowestTemp, int highestTemp) {
+    private static float GetMiddleTemperature(float[] patients) {
 
+        DoubleStream ds = IntStream.range(0, patients.length).mapToDouble(i -> patients[i]);
+        OptionalDouble obj = ds.average();
 
-        return 0;
+        return (float)obj.getAsDouble();
     }
 
     private static float[] CreateArrayPatients(int countOfPatients, float lowestTemp, float highestTemp) {
@@ -94,7 +71,8 @@ public class Program {
         float[] arrTemp = new float[countOfPatients];
 
         for (int i = 0; i <= arrTemp.length - 1; i++) {
-            arrTemp[i] = lowestTemp + (int) ((float) Math.random() * (highestTemp - lowestTemp) + (int) ((float) Math.random() * 10) / 10f);
+            arrTemp[i] = lowestTemp + (int) ((float) Math.random() * (highestTemp - lowestTemp)) + (int) ((float) Math.random() * 100) / 100f;
+            System.out.println("Пациент № " + (i+1) + " " + arrTemp[i]);
         }
 
         return arrTemp;
