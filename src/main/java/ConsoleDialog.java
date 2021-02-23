@@ -10,7 +10,8 @@ class ConsoleDialog {
         System.out.println("•\tLIST — выводит дела с их порядковыми номерами;\n" +
                 "•\tADD — добавляет дело в конец списка или дело на определённое место, сдвигая остальные дела вперёд, если указать номер; \n" +
                 "•\tEDIT — заменяет дело с указанным номером;\n" +
-                "•\tDELETE — удаляет.");
+                "•\tDELETE — удаляет. \n" +
+                "•\tДля завершения работы программы введите 0 \n");
     }
 
     public void acceptCommandStringByUser() {
@@ -19,10 +20,14 @@ class ConsoleDialog {
         String title = null;
         try {
             title = reader.readLine();
-            this.commandStringByUser = title;
+            commandStringByUser = title;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(this.commandStringByUser);
+    }
+
+    public void tryInput (){
+        showMenu();
+        acceptCommandStringByUser();
     }
 }
