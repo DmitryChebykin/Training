@@ -41,7 +41,8 @@ private String[] commandsForTaskList;
             System.out.println("Текущий список дел следующий:");
             int currentTask = 1;
             for ( int i = 0; i < myTask.size(); i++ ){
-                System.out.println(Program.ANSI_RED + "Дело № " + currentTask + Program.ANSI_RESET + " " + myTask.get(i));
+                StringBuilder resultMessage = new StringBuilder();
+                System.out.println(resultMessage.append(Program.ANSI_RED).append("Дело № ").append(currentTask).append(Program.ANSI_RESET).append(" ").append(myTask.get(i)));
                 currentTask++;
             }
         }
@@ -53,20 +54,23 @@ private String[] commandsForTaskList;
         else{
             if (myTask.size() < taskPointer) {
                 taskPointer = myTask.size();
-                System.out.println("Дело будет добавлено в конец списка под номером "  +  Program.ANSI_RED + (taskPointer + 1) +  Program.ANSI_RESET);
+                StringBuilder resultMessage = new StringBuilder();
+                System.out.println(resultMessage.append("Дело будет добавлено в конец списка под номером ").append(Program.ANSI_RED).append((taskPointer + 1)).append(Program.ANSI_RESET));
             }
             myTask.add(taskPointer, commandsForTaskList[2]);
         }
     }
     private void doEdit (int taskPointer){
         if( taskPointer > myTask.size()){
-            System.out.println("Дела с таким номером " +  Program.ANSI_RED + (taskPointer+1) +  Program.ANSI_RESET + " нет в списке. Отредактировать невозможно");
+            StringBuilder resultMessage = new StringBuilder();
+            System.out.println(resultMessage.append("Дела с таким номером ").append(Program.ANSI_RED).append((taskPointer+1)).append(Program.ANSI_RESET).append(" нет в списке. Отредактировать невозможно"));
         }
         else {myTask.set(taskPointer, commandsForTaskList[2]);}
     }
     private void doDelete (int taskPointer){
         if( taskPointer > myTask.size()){
-            System.out.println("Дела с таким номером " +  Program.ANSI_RED + (taskPointer+1) +  Program.ANSI_RESET + " нет в списке. Удаление не производится");
+            StringBuilder resultMessage = new StringBuilder();
+            System.out.println(resultMessage.append("Дела с таким номером ").append(Program.ANSI_RED).append((taskPointer+1)).append(Program.ANSI_RESET).append(" нет в списке. Удаление не производится"));
         }
         else {myTask.remove(taskPointer);}
     }
