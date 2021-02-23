@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 class ConsoleDialog {
     String commandStringByUser;
 
-    public void showMenu() {
+    private void showMenu() {
         System.out.println("Введите нужную команду: ");
         System.out.println("•\tLIST — выводит дела с их порядковыми номерами;\n" +
                 "•\tADD — добавляет дело в конец списка или дело на определённое место, сдвигая остальные дела вперёд, если указать номер; \n" +
@@ -14,7 +14,7 @@ class ConsoleDialog {
                 "•\tДля завершения работы программы введите 0 \n");
     }
 
-    public void acceptCommandStringByUser() {
+    private void acceptCommandStringByUser() {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
         String title = null;
