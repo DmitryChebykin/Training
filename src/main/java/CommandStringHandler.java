@@ -52,10 +52,11 @@ public class CommandStringHandler {
             default:
                 j = 2;
         }
+        StringBuilder resultTask = new StringBuilder();
         for (int i = j; i < arrText.length; i++) {
-            textFromArray = textFromArray.concat(arrText[i] + " ");
+            resultTask.append(arrText[i]).append(" ");
         }
-        contentTask = textFromArray;
+        contentTask = resultTask.toString();
     }
 
     public void  checkRightCommand(String anyString){
