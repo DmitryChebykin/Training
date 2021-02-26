@@ -1,14 +1,10 @@
-import com.sun.deploy.util.StringUtils;
-
-import java.util.Arrays;
-
 public class CommandStringHandler {
 
     String commandTask = "UNKNOWN";
     String numberTask = "not defined";
     String contentTask = "not defined";
     boolean rightCommand = false;
-    boolean rightNumberTask = false;
+    boolean rightParamPlaced = false;
     private String[] arrText;
 
     public String checkExitCode (String anyString){
@@ -76,7 +72,7 @@ public class CommandStringHandler {
             case ("ADD"):
                 checkDigitInSecondWord();
             case ("LIST"):
-                rightNumberTask = true;
+                rightParamPlaced = true;
                 break;
             case ("EDIT"):
             case ("DELETE"):
@@ -85,7 +81,8 @@ public class CommandStringHandler {
                 if (numberTask.equals("not defined")){
                     System.out.println("Для команд EDIT или DELETE требуется указать номер дела - положительное целое число");
                 }
-                else {rightNumberTask = true;}
+                else {
+                    rightParamPlaced = true;}
         }
 
 
@@ -97,7 +94,7 @@ public class CommandStringHandler {
         numberTask = "not defined";
         contentTask = "not defined";
         rightCommand = false;
-        rightNumberTask = false;
+        rightParamPlaced = false;
         arrText = null;
     }
 }

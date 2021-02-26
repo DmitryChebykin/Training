@@ -26,7 +26,7 @@ class MyApp {
             rotateInput(consoleDialog, commandString);
             commandString.checkTaskNumberIfNeeded();
         }
-        while ( !commandString.rightNumberTask);{}
+        while ( !commandString.rightParamPlaced);{}
     }
     private void rotateRuntime (ConsoleDialog consoleDialog, CommandStringHandler commandString, ArrayListProcessor arrayListProcessor){
 
